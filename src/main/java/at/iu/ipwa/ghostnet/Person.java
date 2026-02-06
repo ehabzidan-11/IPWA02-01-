@@ -22,7 +22,7 @@ public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "Vorname")
@@ -31,7 +31,10 @@ public class Person implements Serializable {
     @Column(name = "Zuname")
     private String zuname;
     
+    @Column(name="telefon", length=30)
+    private String telefon;
     
+
     public Long getId() {
         return id;
     }
@@ -40,6 +43,32 @@ public class Person implements Serializable {
         this.id = id;
     }
 
+    public String getVorname() {
+        return vorname;
+    }
+
+    public void setVorname(String vorname) {
+        this.vorname = vorname;
+    }
+
+    public String getZuname() {
+        return zuname;
+    }
+
+    public void setZuname(String zuname) {
+        this.zuname = zuname;
+    }
+
+    public String getTelefon() {
+        return telefon;
+    }
+
+    public void setTelefon(String telefon) {
+        this.telefon = telefon;
+    }
+
+       
+    
     @Override
     public int hashCode() {
         int hash = 0;
