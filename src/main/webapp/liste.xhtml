@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+    <h:head>
+        <title>Geisternetze</title>
+    </h:head>
+    <h:body>
+
+        <h1 align="center">Alle Geisternetze</h1>
+
+        <h:button value="Neues Netz melden" outcome="report" />
+
+        <h:dataTable value="#{geisternetzListeBean.alle}"
+                     var="g"
+                     border="1"
+                     cellpadding="6" >
+
+            <h:column>
+                <f:facet name="header">ID</f:facet>
+                <h:outputText value="#{g.id}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Breite</f:facet>
+                <h:outputText value="#{g.breitengrad}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Länge</f:facet>
+                <h:outputText value="#{g.laengengrad}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Größe</f:facet>
+                <h:outputText value="#{g.groesse}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Status</f:facet>
+                <h:outputText value="#{g.status}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Aktionen</f:facet>
+
+                <h:form>
+                    <h:commandButton value="Geborgen"
+                                     action="#{geisternetzListeBean.geborgen(g.id)}" />
+                    <h:commandButton value="Verschollen"
+                                     action="#{geisternetzListeBean.verschollen(g.id)}" />
+                </h:form>
+
+            </h:column>
+
+        </h:dataTable>
+
+    </h:body>
+</html>

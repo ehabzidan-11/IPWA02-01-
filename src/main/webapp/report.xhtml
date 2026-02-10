@@ -1,11 +1,55 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Geisternetze</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+
+        <h1 align="center">Geisternetz melden</h1>
+
+        
+        <h:form id="reportForm">
+
+           
+
+            <h:panelGrid columns="2" cellpadding="6">
+
+                <h:outputLabel for="breite" value="Breitengrad:" />
+                <h:inputText id="breite"
+                             value="#{geisternetzFormBean.geisternetz.breitengrad}"
+                             required="true" requiredMessage="Breitengrad ist Pflicht.">
+                    <f:convertNumber />
+                    <f:validateDoubleRange minimum="-90" maximum="90" />
+                </h:inputText>
+
+                <h:outputLabel for="laenge" value="Längengrad:" />
+                <h:inputText id="laenge"
+                             value="#{geisternetzFormBean.geisternetz.laengengrad}"
+                             required="true" requiredMessage="Längengrad ist Pflicht.">
+                    <f:convertNumber />
+                    <f:validateDoubleRange minimum="-180" maximum="180" />
+                </h:inputText>
+
+                <h:outputLabel for="groesse" value="Größe (optional):" />
+                <h:inputText id="groesse"
+                             value="#{geisternetzFormBean.geisternetz.groesse}">
+                    <f:convertNumber integerOnly="true" />
+                </h:inputText>
+
+                <h:outputLabel for="anonym" value="Anonym gemeldet:" />
+                <h:selectBooleanCheckbox id="anonym"
+                                         value="#{geisternetzFormBean.geisternetz.anonymGemeldet}" />
+
+            </h:panelGrid>
+
+            <h:commandButton value="Melden" action="#{geisternetzFormBean.melden}" />
+            
+            <h:button outcome="liste" value="Zur Übersicht"/>
+            
+        </h:form>
+
     </h:body>
 </html>

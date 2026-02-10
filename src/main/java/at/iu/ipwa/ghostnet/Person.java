@@ -35,6 +35,10 @@ public class Person implements Serializable {
     private String telefon;
     
 
+    public Person(){
+        
+    }
+    
     public Long getId() {
         return id;
     }

@@ -40,7 +40,7 @@ public class Geisternetz implements Serializable {
     
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable=false)
-    private Status status;
+    private Status status = Status.GEMELDET;
     
     @Column(name = "anonym_gemeldet", nullable=false)
     private boolean anonymGemeldet;
@@ -54,6 +54,10 @@ public class Geisternetz implements Serializable {
         this.breitengrad = breitengrad;
         this.laengengrad = laengengrad;
         this.groesse = groesse;
+    }
+    
+    public Geisternetz(){
+        
     }
     
     public Long getId() {

@@ -9,8 +9,8 @@ package at.iu.ipwa.ghostnet;
  * @author ehabz
  */
 public enum Status {
-    Gemeldet,
-    Bergung_Bevorstehend,
-    Geborgen,
-    Verschollen
+    GEMELDET,
+    BERGUNG_BEVORSTEHEND,
+    GEBORGEN,
+    VERSCHOLLEN
 }
