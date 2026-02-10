@@ -20,7 +20,8 @@
                 <h:outputLabel for="breite" value="Breitengrad:" />
                 <h:inputText id="breite"
                              value="#{geisternetzFormBean.geisternetz.breitengrad}"
-                             required="true" requiredMessage="Breitengrad ist Pflicht.">
+                             required="true" requiredMessage="Breitengrad ist Pflicht."
+                             >
                     <f:convertNumber />
                     <f:validateDoubleRange minimum="-90" maximum="90" />
                 </h:inputText>

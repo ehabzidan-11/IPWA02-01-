@@ -25,11 +25,9 @@ public class Person implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "Vorname")
-    private String vorname;
+    @Column(name = "name")
+    private String name;
     
-    @Column(name = "Zuname")
-    private String zuname;
     
     @Column(name="telefon", length=30)
     private String telefon;
@@ -47,21 +45,14 @@ public class Person implements Serializable {
         this.id = id;
     }
 
-    public String getVorname() {
-        return vorname;
+    public String getName() {
+        return name;
     }
 
-    public void setVorname(String vorname) {
-        this.vorname = vorname;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getZuname() {
-        return zuname;
-    }
-
-    public void setZuname(String zuname) {
-        this.zuname = zuname;
-    }
 
     public String getTelefon() {
         return telefon;
