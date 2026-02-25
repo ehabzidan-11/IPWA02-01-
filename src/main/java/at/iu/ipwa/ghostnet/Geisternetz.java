@@ -55,6 +55,17 @@ public class Geisternetz implements Serializable {
         this.laengengrad = laengengrad;
         this.groesse = groesse;
     }
+
+    public Geisternetz(Long id, Double breitengrad, Double laengengrad, Integer groesse, boolean anonymGemeldet, Person bergendePerson) {
+        this.id = id;
+        this.breitengrad = breitengrad;
+        this.laengengrad = laengengrad;
+        this.groesse = groesse;
+        this.anonymGemeldet = anonymGemeldet;
+        this.bergendePerson = bergendePerson;
+    }
+    
+    
     
     public Geisternetz(){
         
