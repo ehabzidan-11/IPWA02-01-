@@ -43,6 +43,16 @@
             </h:column>
 
             <h:column>
+                <f:facet name="header">Name der Person</f:facet>
+                <h:outputText value="#{g.bergendePerson.name}" />
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Telefonnummer</f:facet>
+                <h:outputText value="#{g.bergendePerson.telefon}" />
+            </h:column>
+            
+            <h:column>
                 <f:facet name="header">Aktionen</f:facet>
 
                 <h:form>
