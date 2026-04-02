@@ -1,72 +1,106 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="jakarta.faces.html"
       xmlns:f="jakarta.faces.core">
+
     <h:head>
         <title>Geisternetze</title>
+
+        <h:outputStylesheet>
+            .formLabel { width: 260px; text-align: left; vertical-align: middle; }
+            .formField { width: 320px; vertical-align: middle; }
+        </h:outputStylesheet>
     </h:head>
+
     <h:body>
 
         <h1 align="center">Geisternetz melden</h1>
 
-        
         <h:form id="reportForm">
 
-           
+            <!-- Meldungen/Validierungsfehler (in der Form, damit AJAX sie rendert) -->
+            <h:messages id="msgs" globalOnly="false" layout="table" style="color:red;" />
 
-            <h:panelGrid columns="2" cellpadding="6">
+            <!-- Grid NUR für Breite/Länge/Größe -->
+            <h:panelGrid columns="2" cellpadding="6" columnClasses="formLabel,formField">
 
-                <h:outputLabel for="breite" value="Breitengrad (-90 / 90):" />
+                <h:outputLabel for="breite" value="*Breitengrad (-90 / 90):" />
                 <h:inputText id="breite"
                              value="#{geisternetzFormBean.geisternetz.breitengrad}"
-                             required="true" requiredMessage="Breitengrad ist Pflicht."
-                             >
+                             required="true"
+                             requiredMessage="Breitengrad ist Pflicht."
+                             validatorMessage="Breitengrad muss zwischen -90 und 90 liegen."
+                             converterMessage="Bitte eine Zahl für den Breitengrad eingeben.">
                     <f:convertNumber />
                     <f:validateDoubleRange minimum="-90" maximum="90" />
                 </h:inputText>
 
-                <h:outputLabel for="laenge" value="Längengrad (-180 / 180):" />
+                <h:outputLabel for="laenge" value="*Längengrad (-180 / 180):" />
                 <h:inputText id="laenge"
                              value="#{geisternetzFormBean.geisternetz.laengengrad}"
-                             required="true" requiredMessage="Längengrad ist Pflicht.">
+                             required="true"
+                             requiredMessage="Längengrad ist Pflicht."
+                             validatorMessage="Längengrad muss zwischen -180 und 180 liegen."
+                             converterMessage="Bitte eine Zahl für den Längengrad eingeben.">
                     <f:convertNumber />
                     <f:validateDoubleRange minimum="-180" maximum="180" />
                 </h:inputText>
 
                 <h:outputLabel for="groesse" value="Größe (optional):" />
                 <h:inputText id="groesse"
-                             value="#{geisternetzFormBean.geisternetz.groesse}">
+                             value="#{geisternetzFormBean.geisternetz.groesse}"
+                             converterMessage="Bitte eine ganze Zahl für die Größe eingeben.">
                     <f:convertNumber integerOnly="true" />
                 </h:inputText>
 
-                <h:outputLabel for="anonym" value="Anonym melden:" />
-                <h:selectBooleanCheckbox id="anonym"
-                                         value="#{geisternetzFormBean.geisternetz.anonymGemeldet}" />
-
-                <h:outputLabel value="Person"/>
-                
-                 <h:outputLabel value=""/>
-                 
-                  <h:outputLabel for="name" value="Name:" />
-                <h:inputText id="name"
-                             value="#{geisternetzFormBean.geisternetz.bergendePerson.name}">
-                    <f:convertNumber integerOnly="true" />
-                </h:inputText>
-                  
-                    <h:outputLabel for="telefonnummer" value="Telefonnummer: (max. 30 Zeichen):" />
-                <h:inputText id="telefonnummer"
-                             value="#{geisternetzFormBean.geisternetz.bergendePerson.telefon}">
-                    <f:convertNumber integerOnly="true" />
-                </h:inputText>
-                
             </h:panelGrid>
 
+            <h:panelGrid columns="2" cellpadding="6" columnClasses="formLabel,formField">
+                <h:outputLabel for="anonym" value="Anonym melden:" />
+                <h:panelGroup style="white-space:nowrap;">
+                    <h:selectBooleanCheckbox id="anonym"
+                                             value="#{geisternetzFormBean.anonymGemeldet}">
+                        <f:ajax event="change" 
+                                execute="@this" 
+                                render=":reportForm:personBlock :reportForm:dbg"/>
+                    </h:selectBooleanCheckbox>
+                </h:panelGroup>
+            </h:panelGrid>
+
+            <!-- Person bleibt sichtbar, Felder werden deaktiviert wenn anonym -->
+            <h:panelGroup id="personBlock"
+                          style="#{geisternetzFormBean.anonymGemeldet ? 'opacity:0.5;' : ''}">
+
+                <h3>Person</h3>
+
+                <h:panelGrid columns="2" cellpadding="6" columnClasses="formLabel,formField">
+
+                    <h:outputLabel for="name" value="Name:" />
+                    <h:inputText id="name"
+                                 value="#{geisternetzFormBean.geisternetz.bergendePerson.name}"
+                                 disabled="#{geisternetzFormBean.anonymGemeldetEffective}"
+                                 required="#{not geisternetzFormBean.anonymGemeldetEffective}"
+                                 requiredMessage="Name ist Pflicht." />
+
+                    <h:outputLabel for="telefonnummer" value="Telefonnummer (max. 30 Zeichen):" />
+                    <h:inputText id="telefonnummer"
+                                 value="#{geisternetzFormBean.geisternetz.bergendePerson.telefon}"
+                                 disabled="#{geisternetzFormBean.anonymGemeldetEffective}"
+                                 required="#{not geisternetzFormBean.anonymGemeldetEffective}"
+                                 requiredMessage="Telefonnummer ist Pflicht." />
+                </h:panelGrid>
+
+            </h:panelGroup>
+
+            <!-- Buttons: normaler Submit reicht jetzt -->
             <h:commandButton value="Melden" action="#{geisternetzFormBean.melden}" />
-            
             <h:button outcome="liste" value="Zur Übersicht"/>
-            
+
         </h:form>
+
+        <h:outputLabel value="* Pflichtfeld" />
 
     </h:body>
 </html>

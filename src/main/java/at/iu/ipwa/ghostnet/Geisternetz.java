@@ -4,6 +4,7 @@
  */
 package at.iu.ipwa.ghostnet;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -21,33 +22,35 @@ import java.io.Serializable;
  * @author ehabz
  */
 @Entity
-@Table(name ="geisternetz")
+@Table(name = "geisternetz")
 public class Geisternetz implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "breitengrad", nullable = false)
     private Double breitengrad;
-    
+
     @Column(name = "laengengrad", nullable = false)
     private Double laengengrad;
-    
+
     @Column(name = "groesse")
-    private Integer groesse; 
-    
+    private Integer groesse;
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable=false)
+    @Column(name = "status", nullable = false)
     private Status status = Status.GEMELDET;
-    
-    @Column(name = "anonym_gemeldet", nullable=false)
+
+    @Column(name = "anonym_gemeldet", nullable = false)
     private boolean anonymGemeldet;
-    
-    @ManyToOne
-    @JoinColumn(name="bergende_person_id")
+
+    //neue Person automatisch mitgespeichert 
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "bergende_person_id")
     private Person bergendePerson;
+
+    public Geisternetz() { }
     
     public Geisternetz(Long id, Double breitengrad, Double laengengrad, Integer groesse) {
         this.id = id;
@@ -63,12 +66,6 @@ public class Geisternetz implements Serializable {
         this.groesse = groesse;
         this.anonymGemeldet = anonymGemeldet;
         this.bergendePerson = bergendePerson;
-    }
-    
-    
-    
-    public Geisternetz(){
-        
     }
     
     public Long getId() {
