@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+    <h:head>
+        <title>Bergung übernehmen</title>
+    </h:head>
+
+    <h:body>
+
+        <h1>Bergung übernehmen</h1>
+
+        <h:form>
+
+            <h:messages style="color:red;" showDetail="true" />
+
+            <!-- ✅ ID beim POST mitsenden -->
+            <h:inputHidden value="#{bergungBean.id}" />
+
+            <h:panelGrid columns="2" cellpadding="6">
+
+                <h:outputText value="Geisternetz-ID:" />
+                <h:outputText value="#{bergungBean.id}" />
+
+                <h:outputLabel for="name" value="Name:" />
+                <h:inputText id="name" value="#{bergungBean.name}"
+                             required="true" requiredMessage="Name ist Pflicht." />
+
+                <h:outputLabel for="telefon" value="Telefon:" />
+                <h:inputText id="telefon" value="#{bergungBean.telefon}"
+                             required="true" requiredMessage="Telefon ist Pflicht." />
+
+            </h:panelGrid>
+
+            <h:commandButton value="Speichern" action="#{bergungBean.speichern}" />
+            <h:button value="Abbrechen" outcome="liste" />
+
+        </h:form>
+
+    </h:body>
+</html>

@@ -1,25 +1,27 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="jakarta.faces.html"
       xmlns:f="jakarta.faces.core">
+
     <h:head>
-        <title>Geisternetze</title>
+        <title>Noch zu bergende Geisternetze</title>
     </h:head>
+
     <h:body>
 
-        <h1 align="center">Alle Geisternetze</h1>
+        <h1 align="center">Noch zu bergende Geisternetze</h1>
 
-        <h:messages style="color:red;"  showDetail="true" />
+        <h:messages style="color:red;" />
 
+        <h:button value="Alle Geisternetze" outcome="liste" />
         <h:button value="Neues Netz melden" outcome="report" />
 
-        <h:button value="Noch zu bergen" outcome="offen" />
-
-        <h:dataTable value="#{geisternetzListeBean.alle}"
+        <h:dataTable value="#{geisternetzListeBean.offen}"
                      var="g"
                      border="1"
-                     cellpadding="6" >
+                     cellpadding="6">
 
             <h:column>
                 <f:facet name="header">ID</f:facet>
@@ -59,7 +61,7 @@
             <h:column>
                 <f:facet name="header">Aktionen</f:facet>
 
-                <!-- POST-Aktionen -->
+                <!-- Buttons: status ändern -->
                 <h:form>
                     <h:commandButton value="Geborgen" action="#{geisternetzListeBean.geborgen}">
                         <f:setPropertyActionListener target="#{geisternetzListeBean.selectedId}" value="#{g.id}" />
@@ -70,9 +72,7 @@
                     </h:commandButton>
                 </h:form>
 
-                <!-- GET-Navigation (ohne Form!) -->
-                <h:link value="Bergung übernehmen" outcome="bergung"
-                        rendered="#{g.status ne 'GEBORGEN' and g.status ne 'VERSCHOLLEN'}">
+                <h:link value="Bergung übernehmen" outcome="bergung">
                     <f:param name="id" value="#{g.id}" />
                 </h:link>
 
